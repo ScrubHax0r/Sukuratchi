@@ -58,6 +58,7 @@ async def easteregg(ctx):
 async def kemonofetch(ctx):
     embed = discord.Embed()
     embed.set_image(url=(nekos.img('kemonomimi')))
+    await ctx.send(embed=embed)
 
 #@client.command()
 #async def stopbot(ctx):
