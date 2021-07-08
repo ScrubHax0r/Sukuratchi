@@ -43,6 +43,10 @@ async def ping(ctx):
 async def kemono(ctx):
     await ctx.send(nekos.img('kemonomimi'))
 
+@client.command()
+async def easteregg(ctx):
+    await ctx.send('Never gonna give you up. Never gonna let you down. Never gonna run around and desert you')
+
 #HOW I USED TO DO STUFF FOR NEKOS BUT LATER SCRAPPED
 
 #@client.command()
