@@ -1,6 +1,7 @@
 #importing shit
 #hi there
 
+from discord import message
 import nekos
 import glob
 import discord
@@ -47,7 +48,24 @@ async def kemono(ctx):
 async def easteregg(ctx):
     await ctx.send('Never gonna give you up. Never gonna let you down. Never gonna run around and desert you')
 
+#@client.command()
+#async def kemonofetch(ctx):
+#    embed = discord.Embed(title=(nekos.img('kemonomimi')), description=(nekos.img('kemonomimi'))) #,color=Hex code
+#    embed.add_field(name="Name", value="you can make as much as fields you like to")
+#    await ctx.send(embed=embed)
+
+@client.command()
+async def kemonofetch(ctx):
+    embed = discord.Embed()
+    embed.set_image(url=(nekos.img('kemonomimi')))
+
+#@client.command()
+#async def stopbot(ctx):
+#    await ctx.send('Stoppng the bot')
+#    exit()
+
 #HOW I USED TO DO STUFF FOR NEKOS BUT LATER SCRAPPED
+#(Also this whole section doesn't even work if I uncomment it, I used to just use files on my pc and used a random module)
 
 #@client.command()
 #async def nekofetch(ctx):
