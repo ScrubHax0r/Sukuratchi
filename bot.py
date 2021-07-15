@@ -18,8 +18,9 @@ client = commands.Bot(command_prefix = "!")
 
 #variables
 
-nekoimgs_path = r'C:\\Users\\ScratchHacker\\Documents\\Discord Bot\\NekoImgs'
-nekomimi_list = glob.glob(nekoimgs_path+'*.jpg')
+#(These variables are useless atm)
+#nekoimgs_path = r'C:\\Users\\ScratchHacker\\Documents\\Discord Bot\\NekoImgs'
+#nekomimi_list = glob.glob(nekoimgs_path+'*.jpg')
 #nekomimi_random = ["neko1.jpg", "neko2.jpg"] (Now useless since I switched to nekoslife api)
 
 #bot commands
@@ -42,6 +43,8 @@ async def ping(ctx):
 
 @client.command()
 async def kemono(ctx):
+    await ctx.send('Here\'s a kemonomimi :)')
+#This doesn't work atm, trying to figure out why I'm a dumbass.    await ctx.send("Test", nekos.img('kemonomimi'))
     await ctx.send(nekos.img('kemonomimi'))
 
 @client.command()
