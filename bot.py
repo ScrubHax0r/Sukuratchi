@@ -67,11 +67,13 @@ async def kemonofetch(ctx):
 async def source(ctx):
     await ctx.send('https://github.com/ScrubHax0r/Sukuratchi')
 
-#@client.event
-#async def on_message(message):
-#    mention = f'<@!{client.user.id}>'
-#    if mention in message.content:
-#        await message.channel.send("Hi there! I\'m Sukuratchi. Do !help for a list of commands.")
+#This gives you a response if you ping the bot, but for now you can't use this since it fucks with commands in general for some reason
+@client.event
+async def on_message(message):
+    mention = f'<@!{client.user.id}>'
+    if mention in message.content:
+        await message.channel.send(f"Hi there, {message.author.mention}! I\'m Sukuratchi. Do !help for a list of commands.")
+    await client.process_commands(message)
 
 #@client.command()
 #async def stopbot(ctx):
