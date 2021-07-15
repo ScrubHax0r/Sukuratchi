@@ -63,6 +63,12 @@ async def kemonofetch(ctx):
     embed.set_image(url=(nekos.img('kemonomimi')))
     await ctx.send(embed=embed)
 
+#@client.event
+#async def on_message(message):
+#    mention = f'<@!{client.user.id}>'
+#    if mention in message.content:
+#        await message.channel.send("Hi there! I\'m Sukuratchi. Do !help for a list of commands.")
+
 #@client.command()
 #async def stopbot(ctx):
 #    await ctx.send('Stoppng the bot')
