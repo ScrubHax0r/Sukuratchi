@@ -67,7 +67,7 @@ async def kemonofetch(ctx):
 async def source(ctx):
     await ctx.send('https://github.com/ScrubHax0r/Sukuratchi')
 
-#This gives you a response if you ping the bot, but for now you can't use this since it fucks with commands in general for some reason
+#This gives you a response if you ping the bot
 @client.event
 async def on_message(message):
     mention = f'<@!{client.user.id}>'
