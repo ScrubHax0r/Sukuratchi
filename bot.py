@@ -63,6 +63,10 @@ async def kemonofetch(ctx):
     embed.set_image(url=(nekos.img('kemonomimi')))
     await ctx.send(embed=embed)
 
+@client.command()
+async def source(ctx):
+    await ctx.send('https://github.com/ScrubHax0r/Sukuratchi')
+
 #@client.event
 #async def on_message(message):
 #    mention = f'<@!{client.user.id}>'
