@@ -1,7 +1,9 @@
 #importing shit
 #hi there
 
+from sys import prefix
 from discord import message
+import json
 import nekos
 import glob
 import discord
@@ -14,7 +16,11 @@ TOKEN = config('TOKEN')
 
 #bot prefix is set here
 
-client = commands.Bot(command_prefix = "!")
+def get_prefix(client, message):
+    with open('prefixes.json', 'r') as f:
+        prefixes=json.load(f)
+    return prefixes[str(message.guild.id)]
+client = commands.Bot(command_prefix = get_prefix)
 
 #variables
 
@@ -30,12 +36,29 @@ async def on_ready():
     print("Bot is ready")
 
 @client.event
-async def on_member_join(member):
-    print(f'{member} has joined the server')
+async def on_guild_join(guild):
+    with open('prefixes.json', 'r') as f:
+        prefixes=json.load(f)
+    prefixes[str(guild.id)] = '!'
+    with open('prefixes.json', 'w') as f:
+        json.dump(prefixes, f, indent=4)
 
 @client.event
-async def on_member_remove(member):
-    print(f'{member} has left the server')
+async def on_guild_remove(guild):
+    with open('prefixes.json', 'r') as f:
+        prefixes=json.load(f)
+    prefixes.pop(str(guild.id))
+    with open('prefixes.json', 'w') as f:
+        json.dump(prefixes, f, indent=4)
+
+@client.command()
+async def setprefix(ctx, prefix):
+    with open('prefixes.json', 'r') as f:
+        prefixes=json.load(f)
+    prefixes[str(ctx.guild.id)] = prefix
+    with open('prefixes.json', 'w') as f:
+        json.dump(prefixes, f, indent=4)
+    await ctx.send(f"You have changed the prefix to '{prefix}'!" )
 
 @client.command()
 async def ping(ctx):
@@ -72,7 +95,7 @@ async def source(ctx):
 async def on_message(message):
     mention = f'{client.user.id}'
     if mention in message.content:
-        await message.channel.send(f"Hi there, {message.author.mention}! I\'m Sukuratchi. Do !help for a list of commands.")
+        await message.channel.send(f"Hi there, {message.author.mention}! I'm Sukuratchi. Do {prefix}help for a list of commands.")
     await client.process_commands(message)
 
 #@client.command()
