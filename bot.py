@@ -20,7 +20,7 @@ def get_prefix(client, message):
     with open('prefixes.json', 'r') as f:
         prefixes=json.load(f)
     return prefixes[str(message.guild.id)]
-client = commands.Bot(command_prefix = get_prefix)
+client = commands.Bot(command_prefix=get_prefix)
 
 #variables
 
@@ -95,6 +95,9 @@ async def source(ctx):
 async def on_message(message):
     mention = f'{client.user.id}'
     if mention in message.content:
+        with open('prefixes.json', 'r') as f:
+            prefixes = json.load(f)
+        prefix = prefixes[str(message.guild.id)]
         await message.channel.send(f"Hi there, {message.author.mention}! I'm Sukuratchi. Do {prefix}help for a list of commands.")
     await client.process_commands(message)
 
