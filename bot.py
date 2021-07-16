@@ -34,6 +34,7 @@ client = commands.Bot(command_prefix=get_prefix)
 @client.event
 async def on_ready():
     print("Bot is ready")
+    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="some anime"))
 
 @client.event
 async def on_guild_join(guild):
@@ -100,6 +101,13 @@ async def on_message(message):
         prefix = prefixes[str(message.guild.id)]
         await message.channel.send(f"Hi there, {message.author.mention}! I'm Sukuratchi. Do {prefix}help for a list of commands.")
     await client.process_commands(message)
+
+#@client.event
+#async def on_message(message):
+#    badword = f'Fuck'
+#    if badword in message.content:
+#        await message.channel.send(f"{message.author.mention} just said a bad word!")
+#    await client.process_commands(message)
 
 #@client.command()
 #async def stopbot(ctx):
