@@ -71,7 +71,6 @@ async def source(ctx):
 @client.event
 async def on_message(message):
     mention = f'{client.user.id}'
-    print(mention)
     if mention in message.content:
         await message.channel.send(f"Hi there, {message.author.mention}! I\'m Sukuratchi. Do !help for a list of commands.")
     await client.process_commands(message)
