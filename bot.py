@@ -70,7 +70,7 @@ async def source(ctx):
 #This gives you a response if you ping the bot
 @client.event
 async def on_message(message):
-    mention = f'<@!{client.user.id}>'
+    mention = f'<@862307831847583745>'
     if mention in message.content:
         await message.channel.send(f"Hi there, {message.author.mention}! I\'m Sukuratchi. Do !help for a list of commands.")
     await client.process_commands(message)
