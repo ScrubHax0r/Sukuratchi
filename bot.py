@@ -51,6 +51,45 @@ async def change_status():
     else:
         await client.change_presence(activity=discord.Activity(type=discord.ActivityType.playing, name="with my cat"))
 
+@client.command()
+@commands.has_permissions(kick_members=True)
+async def kick(ctx, member:discord.Member, *, reason=None):
+    if member.top_role>=ctx.author.top_role:
+        await ctx.send(f'I\'m sorry {ctx.message.author.mention}! But I can\'t just let you kick someone that has the same or a higher role than you!')
+        return
+    await member.kick(reason=reason)
+
+@kick.error
+async def kick_error(ctx, error):
+    if isinstance(error, commands.MissingPermissions):
+        await ctx.send(f'Hey {ctx.message.author.mention}! You don\'t have permission to do that!')
+
+@client.command()
+@commands.has_permissions(ban_members=True)
+async def ban(ctx, member:discord.Member, *, reason=None):
+    if member.top_role>=ctx.author.top_role:
+        await ctx.send(f'I\'m sorry {ctx.message.author.mention}! But I can\'t just let you ban someone that has the same or a higher role than you!')
+        return
+    await member.ban(reason=reason)
+    await ctx.send(f'{ctx.message.author.mention} has banned {member}!')
+
+
+@ban.error
+async def ban_error(ctx, error):
+    if isinstance(error, commands.MissingPermissions):
+        await ctx.send(f'Hey {ctx.message.author.mention}! You don\'t have permission to do that!')
+
+@client.command()
+@commands.has_permissions(ban_members=True)
+async def unban(ctx, *, member):
+    banned_users = await ctx.guild.bans()
+    member_name, member_discriminator = member.split('#')
+    for ban_entry in banned_users:
+        user = ban_entry.user
+        if(user.name, user.discriminator) == (member_name, member_discriminator):
+            await ctx.guild.unban(user)
+            await ctx.send(f'Lucky! {user.mention} got unbanned!')
+
 @client.event
 async def on_guild_join(guild):
     with open('prefixes.json', 'r') as f:
@@ -99,7 +138,7 @@ async def kemono(ctx):
 
 @client.command()
 async def easteregg(ctx):
-    await ctx.send('Never gonna give you up. Never gonna let you down. Never gonna run around and desert you')
+    await ctx.send('Never gonna give you up. Never gonna let you down. Never gonna run around and desert you', delete_after=10)
 
 #@client.command()
 #async def kemonofetch(ctx):
