@@ -7,12 +7,14 @@ import json
 import nekos
 import glob
 import discord
-from discord.ext import commands
+from discord.ext import commands, tasks
 from discord import Embed
 from discord.ext.commands import has_permissions, MissingPermissions
 import os
+import asyncio
 from decouple import config
 import random
+from itertools import cycle
 TOKEN = config('TOKEN')
 
 #bot prefix is set here
@@ -34,8 +36,20 @@ client = commands.Bot(command_prefix=get_prefix)
 
 @client.event
 async def on_ready():
+    change_status.start()
     print("Bot is ready")
-    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="some anime"))
+
+@tasks.loop(seconds=10)
+async def change_status():
+    statusType=random.randint(0, 3)
+    if statusType == 0:
+        await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="some anime"))
+    elif statusType == 1:
+        await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="the rain outside"))
+    elif statusType == 2:
+        await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="my owner get rich"))
+    else:
+        await client.change_presence(activity=discord.Activity(type=discord.ActivityType.playing, name="with my cat"))
 
 @client.event
 async def on_guild_join(guild):
