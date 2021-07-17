@@ -9,6 +9,7 @@ import glob
 import discord
 from discord.ext import commands
 from discord import Embed
+from discord.ext.commands import has_permissions, MissingPermissions
 import os
 from decouple import config
 import random
@@ -51,6 +52,17 @@ async def on_guild_remove(guild):
     prefixes.pop(str(guild.id))
     with open('prefixes.json', 'w') as f:
         json.dump(prefixes, f, indent=4)
+
+@client.command()
+@commands.has_permissions(manage_messages=True)
+async def clear(ctx, amount=5):
+    await ctx.channel.purge(limit=amount+1)
+    await ctx.send(f'I have deleted {amount} messages, as you requested!', delete_after=5)
+
+@clear.error
+async def clear_error(ctx, error):
+    if isinstance(error, commands.MissingPermissions):
+        await ctx.send(f'Hey {ctx.message.author.mention}! You don\'t have permission to do that!')
 
 @client.command()
 async def setprefix(ctx, prefix):
