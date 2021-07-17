@@ -90,6 +90,11 @@ async def unban(ctx, *, member):
             await ctx.guild.unban(user)
             await ctx.send(f'Lucky! {user.mention} got unbanned!')
 
+@unban.error
+async def unban_error(ctx, error):
+    if isinstance(error, commands.MissingPermissions):
+        await ctx.send(f'Hey {ctx.message.author.mention}! You don\'t have permission to do that!')
+
 @client.event
 async def on_guild_join(guild):
     with open('prefixes.json', 'r') as f:
@@ -137,7 +142,8 @@ async def kemono(ctx):
     await ctx.send(nekos.img('kemonomimi'))
 
 @client.command()
-async def easteregg(ctx):
+async def easteregg(ctx, amount=1):
+    await ctx.channel.purge(limit=amount)
     await ctx.send('Never gonna give you up. Never gonna let you down. Never gonna run around and desert you', delete_after=10)
 
 #@client.command()
@@ -154,6 +160,7 @@ async def kemonofetch(ctx):
 
 @client.command()
 async def source(ctx):
+    await ctx.send('If you\'re feeling dirty and want to look at my source code, here it is! ;)')
     await ctx.send('https://github.com/ScrubHax0r/Sukuratchi')
 
 #This gives you a response if you ping the bot
