@@ -57,7 +57,12 @@ async def kick(ctx, member:discord.Member, *, reason=None):
     if member.top_role>=ctx.author.top_role:
         await ctx.send(f'I\'m sorry {ctx.message.author.mention}! But I can\'t just let you kick someone that has the same or a higher role than you!')
         return
+    try:
+        await member.send('Hey! I don\'t want to say this but you got kicked from the server!')
+    except:
+        print('Tried kicking and dming, but they closed dms like a dumbass')
     await member.kick(reason=reason)
+    await ctx.send(f'{ctx.message.author.mention} has kicked {member}!')
 
 @kick.error
 async def kick_error(ctx, error):
@@ -70,6 +75,10 @@ async def ban(ctx, member:discord.Member, *, reason=None):
     if member.top_role>=ctx.author.top_role:
         await ctx.send(f'I\'m sorry {ctx.message.author.mention}! But I can\'t just let you ban someone that has the same or a higher role than you!')
         return
+    try:
+        await member.send('Hey! I don\'t want to say this but you got banned from the server!')
+    except:
+        print('Tried banning and dming, but they closed dms like a dumbass')
     await member.ban(reason=reason)
     await ctx.send(f'{ctx.message.author.mention} has banned {member}!')
 
